@@ -11,5 +11,6 @@
 <a href="addemp.jsp">Add New Employee</a>
 <a href="updateemp.jsp">Update Employee</a>
 <a href="deleteemp.jsp">Delete Employee</a>
+<a href="viewemp.jsp">View Employee</a>
 </body>
 </html>

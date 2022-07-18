@@ -7,6 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Iterator;
 import java.util.List;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -23,13 +24,13 @@ import com.chainsys.jspproject.pojo.Employee;
  * Servlet implementation class Employees
  */
 @WebServlet("/Employees")
-public class Employees extends HttpServlet {
+public class EmployeeServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
-	public Employees() {
+	public EmployeeServlet() {
 		super();
 	}
 
@@ -38,38 +39,16 @@ public class Employees extends HttpServlet {
 	 *      response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		response.getWriter().append("Served at: ").append(request.getContextPath());
-		PrintWriter out = response.getWriter();
-		List<Employee> emplist = EmployeeDao.getAllEmployee();
-		Iterator<Employee> empItr = emplist.iterator();
-
-		if (request.getParameter("input").equals("yes")) {
-			response.setContentType("text/html");
-			out.print("<html><head><title><Employees</title></head><body>");
-			out.print("<table border=1px bgcolor=\"DodgerBlue\" width=50%>");
-			out.print("<tr bgcolor=\"DarkSlateBlue\" align=center>");
-			out.print("<th height=\"10\" width=\"90\">Emp_id:</th>");
-			out.print("<th height=\"10\" width=\"90\">First_name:</th>");
-			out.print("<th height=\"10\" width=\"90\">Last_name:</th>");
-			out.print("<th height=\"10\" width=\"90\">Salary:</th>");
-
-			while (empItr.hasNext()) {
-				out.print("<tr align=center>");
-				Employee emp = empItr.next();
-				out.print("<td bgcolor=\"DeepSkyBlue\">" + emp.getEmp_Id() + "</td>");
-				out.print("<td bgcolor=\"DeepSkyBlue\">" + emp.getFirst_name() + "</td>");
-				out.print("<td bgcolor=\"DeepSkyBlue\">" + emp.getLast_name() + "</td>");
-				out.print("<td bgcolor=\"DeepSkyBlue\">" + emp.getSalary() + "</td>");
-                out.print("</tr>");
-//			out.println("emp id:"+emp.getEmployee_id()+","+emp.getFirst_name()+","+
-//					emp.getLast_name()+",");
-
+			throws ServletException, IOException
+	{
+		    response.getWriter().append("Served at: ").append(request.getContextPath());
+		    List<Employee> allEmployee = EmployeeDao.getAllEmployee();
+			request.setAttribute("emplist", allEmployee);
+			RequestDispatcher rd = request.getRequestDispatcher("/viewemp.jsp");
+			rd.forward(request, response);
 			}
-		} else
-			out.println(" <br><h4>thank you for processing with us</h4>");
-		out.print("</body></html>");
-	}
+		
+	
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
