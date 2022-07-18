@@ -186,7 +186,6 @@ public class EmployeeDao {
 			con = getConnection();
 			ps = con.prepareStatement(deletequery);
 			ps.setInt(1, id);
-			ps.executeUpdate();
 			rows = ps.executeUpdate();	
 		}catch(SQLException e) {
 			e.printStackTrace();
